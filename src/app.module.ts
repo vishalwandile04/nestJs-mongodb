@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AdminUserModule } from './admin_user/admin_user.module';
-import { AuthModule } from './auth/auth.module';
-import { IngAtmsModule } from './ing-atms/ing-atms.module';
+import { AdminUserModule } from './module/admin_user/admin_user.module';
+import { AuthModule } from './module/auth/auth.module';
+import { IngAtmsModule } from './module/ing-atms/ing-atms.module';
 
 @Module({
   imports: [

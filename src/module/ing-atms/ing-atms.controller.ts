@@ -8,9 +8,9 @@ import {
   UseGuards,
   Put,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiCreatedResponse, ApiForbiddenResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { IngAtmsCreateDTO, IngAtmsUpdateDTO } from './ing-atms.dto';
 import { IngAtms } from './ing-atms.model';
 import { IngAtmsService } from './ing-atms.service';
@@ -21,7 +21,7 @@ export class IngAtmsController {
   constructor(private readonly IngAtmsService: IngAtmsService) { }
 
   // check access token
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiCreatedResponse({ description: "The Atm created sucessufully. " })
   @ApiForbiddenResponse({ description: "Forbidden" })
@@ -33,7 +33,7 @@ export class IngAtmsController {
     return result;
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOkResponse({ description: "The list of all Ing atms returned sucessufully." })
   @ApiForbiddenResponse({ description: "Forbidden" })
@@ -43,7 +43,7 @@ export class IngAtmsController {
     return result;
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOkResponse({ description: "The Ing atm returned sucessufully." })
   @ApiForbiddenResponse({ description: "Forbidden" })
@@ -53,7 +53,7 @@ export class IngAtmsController {
     return result;
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   @ApiOkResponse({ description: "The Atm Updated." })
   @ApiForbiddenResponse({ description: "Forbidden" })
@@ -67,7 +67,7 @@ export class IngAtmsController {
     return result;
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOkResponse({ description: "The Atm Deleted." })
   @ApiForbiddenResponse({ description: "Forbidden" })

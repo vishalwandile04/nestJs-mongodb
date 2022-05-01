@@ -9,6 +9,7 @@ export class IngAtmsService {
     constructor(@InjectModel('Ing_Atms') private readonly IngAtmsModel: Model<IngAtms>,
     ) { }
 
+    // save ing atm in database
     async addIngAtms(ingATM: IngAtms) {
         try {
             const newIngATms = new this.IngAtmsModel(ingATM);
@@ -23,31 +24,42 @@ export class IngAtmsService {
         }
     }
 
+    // fetch list of all items from database
     async getIngAtms() {
         const result = await this.IngAtmsModel.find().exec();
         if (!result) {
-            throw new HttpException('Not found.', HttpStatus.BAD_REQUEST);
+            throw new HttpException('Not found.', HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return result;
+        return result
     }
 
+    // fetching single ing atms by id from database
     async getSingleIngAtms(id: string) {
-        const result = await this.IngAtmsModel.findById(id);
-        return result;
+        try {
+            const result = await this.IngAtmsModel.findById(id);
+            return result;
+        } catch (error) {
+            throw new HttpException('Error in fetching Ing-Atms.', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
+    // update ing atm in db and return updated data
     async updateIngAtms(id: string, IngAtm: IngAtms) {
-        const result = await this.IngAtmsModel.findOneAndUpdate({ _id: id }, IngAtm);
-        return result;
+        try {
+            const result = await this.IngAtmsModel.findOneAndUpdate({ _id: id }, IngAtm);
+            return result;
+        } catch (error) {
+            throw new HttpException('Error in updating Ing-Atms.', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
+    // delete ing atms from db by id
     async deleteIngATms(id: string) {
         try {
             const result = await this.IngAtmsModel.deleteOne({ _id: id });
-            return "Deleted Successfully"; 
+            return "Deleted Successfully";
         } catch (error) {
             return error;
         }
-      
     }
 }

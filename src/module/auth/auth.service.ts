@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthDTO } from 'src/admin_user/admin_user.dto';
-import { AdminUserService } from 'src/admin_user/admin_user.service';
+import { AuthDTO } from '../admin_user/admin_user.dto';
+import { AdminUserService } from '../admin_user/admin_user.service';
 
 @Injectable()
 export class AuthService {
