@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AdminUserModule } from './admin_user/admin_user.module';
 import { AuthModule } from './auth/auth.module';
-import { ImgAtmsModule } from './img-atms/img-atms.module';
+import { IngAtmsModule } from './ing-atms/ing-atms.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { ImgAtmsModule } from './img-atms/img-atms.module';
       "mongodb+srv://vishalwandile:iGB9JF6JJaacVITI@cluster0.ya21i.mongodb.net/ing_atms?retryWrites=true&w=majority"
     ),
     AuthModule,
-    ImgAtmsModule
+    IngAtmsModule
   ],
   controllers: [AppController],
   providers: [AppService],

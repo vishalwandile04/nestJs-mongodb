@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Img Atms')
-    .setDescription('Img Atms API Documenation')
+    .setTitle('Ing Atms')
+    .setDescription('Ing Atms API Documenation')
     .setVersion('1.0')
     .build();
     
