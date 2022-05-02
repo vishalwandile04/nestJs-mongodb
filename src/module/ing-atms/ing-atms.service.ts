@@ -59,7 +59,7 @@ export class IngAtmsService {
             const result = await this.IngAtmsModel.deleteOne({ _id: id });
             return "Deleted Successfully";
         } catch (error) {
-            return error;
+            throw new HttpException('Error in Deleting Ing-Atms.', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

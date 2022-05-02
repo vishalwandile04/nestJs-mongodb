@@ -2,8 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { IngAtmsService } from './ing-atms.service';
 import { IngAtmsCreateDTO, IngAtmsUpdateDTO } from './ing-atms.dto';
-import { IngAtms } from './ing-atms.model';
-import { IngAtmsModule } from './ing-atms.module';
+import { Logger } from '@nestjs/common';
 
 const result = {
     "id": "hgvhgvghvhujv",
@@ -31,7 +30,7 @@ describe('IngAtmsService', () => {
             })
         }
         const app: TestingModule = await Test.createTestingModule({
-            providers: [IngAtmsService, ApiServiceProvider],
+            providers: [IngAtmsService, ApiServiceProvider, Logger],
         }).compile();
 
         spyService = app.get<IngAtmsService>(IngAtmsService);

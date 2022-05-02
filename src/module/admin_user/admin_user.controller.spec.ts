@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdminUserController } from './admin_user.controller';
 import { AdminUserService } from './admin_user.service';
@@ -13,6 +14,7 @@ describe('AdminUserController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AdminUserController],
+      providers: [Logger]
     }).compile();
 
     controller = module.get<AdminUserController>(AdminUserController);

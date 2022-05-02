@@ -10,12 +10,12 @@ export class AdminUserService {
 
     async login(username: string, password: string) {
         try {
+            // find admin user in db 
             const result = await this.adminUserModel.findOne({ username }).exec();
             if (!result) {
                 throw new HttpException('Please Enter Correct username and password.', HttpStatus.BAD_REQUEST);
             }
             return result;
-          
         } catch (error) {
             throw new HttpException('Please Enter Correct username and password.', HttpStatus.BAD_REQUEST);
         }

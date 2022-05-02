@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { IngAtmsController } from './ing-atms.controller';
 import { IngAtmsService } from './ing-atms.service';
 import { IngAtmsCreateDTO } from './ing-atms.dto';
+import { Logger } from '@nestjs/common';
 
 describe('IngATMs Controller', () => {
   let ingATMsController: IngAtmsController;
@@ -20,7 +21,7 @@ describe('IngATMs Controller', () => {
     }
     const app: TestingModule = await Test.createTestingModule({
       controllers: [IngAtmsController],
-      providers: [IngAtmsService, ApiServiceProvider],
+      providers: [IngAtmsService, ApiServiceProvider,Logger],
     }).compile();
 
     ingATMsController = app.get<IngAtmsController>(IngAtmsController);

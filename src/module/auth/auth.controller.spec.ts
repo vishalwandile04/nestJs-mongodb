@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdminUserService } from '../admin_user/admin_user.service';
 
@@ -33,7 +34,8 @@ describe('Auth Controller', () => {
         AuthService,
         AdminUserService,
         ApiServiceProvider,
-        UsersServiceProvider
+        UsersServiceProvider,
+        Logger
       ],
       controllers: [AuthController],
     }).compile();

@@ -1,20 +1,37 @@
-import { Controller, Body, Post, UseGuards, Request } from '@nestjs/common';
+import { Controller, Body, Post, UseGuards, Logger, LoggerService, Inject } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { AuthDTO } from '../admin_user/admin_user.dto';
+import {
+  ApiBadRequestResponse,
+  ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiTags
+} from '@nestjs/swagger';
 
+import { AuthDTO } from '../admin_user/admin_user.dto';
 import { AuthService } from './auth.service';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService) {}
-   
+  constructor(
+    @Inject(Logger) private readonly logger: LoggerService,
+    private authService: AuthService
+  ) { }
+
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  @ApiOkResponse({ description: "Login Successful." })
+  @ApiOkResponse({ description: 'Login successful' })
+  @ApiBadRequestResponse({ description: 'Bad Request' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
+  @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async login(@Body() req: AuthDTO) {
-    return this.authService.loginWithCredentials(req);
+    this.logger.log(`AuthController Login(): username:${req.username}, password:${req.password}`);
+    try {
+      return this.authService.loginWithCredentials(req);
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
   }
-
 }

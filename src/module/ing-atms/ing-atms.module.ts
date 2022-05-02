@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Logger } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { IngAtmsController } from './ing-atms.controller';
 import { IngAtmssSchema } from './ing-atms.model';
@@ -12,7 +12,7 @@ import { IngAtmsService } from './ing-atms.service';
     }])
   ],
   controllers: [IngAtmsController],
-  providers: [IngAtmsService],
+  providers: [IngAtmsService, Logger],
   exports: [IngAtmsService]
 })
 export class IngAtmsModule { }

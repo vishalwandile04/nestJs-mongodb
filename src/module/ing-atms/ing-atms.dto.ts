@@ -8,7 +8,6 @@ export class GeoLocation {
         required: false
     })
     lat: string;
-
     @ApiProperty({
         type: String,
         description: "lng",
@@ -30,24 +29,18 @@ export class IngAtmsCreateDTO {
         type: String,
         description: "Name",
         default: ""
-
     })
     name: string;
-
     @ApiProperty({
         type: String,
         description: "street",
         default: ""
-
     })
     street: string;
-
-
     @ApiProperty({
         type: String,
         description: "city",
         default: ""
-
     })
     city: string;
 
@@ -78,24 +71,18 @@ export class IngAtmsUpdateDTO {
         type: String,
         description: "street",
         default: ""
-
     })
     street: string;
-
-
     @ApiProperty({
         type: String,
         description: "city",
         default: ""
-
     })
     city: string;
-
     @ApiProperty({
-        type: String,
+        type: Object,
         description: "geoLocation",
         default: ""
-
     })
     geoLocation: GeoLocation;
 }

@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdminUserService } from '../admin_user/admin_user.service';
@@ -40,7 +41,8 @@ describe('AuthService', () => {
         JwtService,
         AuthService,
         JWTServiceProvider,
-        UsersServiceProvider
+        UsersServiceProvider,
+        Logger
       ],
     }).compile();
 
