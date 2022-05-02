@@ -1,20 +1,63 @@
 import { ApiProperty } from "@nestjs/swagger";
 
+export class GeoLocation {
+    @ApiProperty({
+        type: String,
+        description: "lat",
+        default: "",
+        required: false
+    })
+    lat: string;
+
+    @ApiProperty({
+        type: String,
+        description: "lng",
+        default: "",
+        required: false
+    })
+    lng: string;
+}
+
 export class IngAtmsCreateDTO {
     @ApiProperty({
         type: String,
         description: "Id",
         default: "",
-        required:false
+        required: false
     })
     id: string;
     @ApiProperty({
         type: String,
         description: "Name",
         default: ""
-        
+
     })
     name: string;
+
+    @ApiProperty({
+        type: String,
+        description: "street",
+        default: ""
+
+    })
+    street: string;
+
+
+    @ApiProperty({
+        type: String,
+        description: "city",
+        default: ""
+
+    })
+    city: string;
+
+    @ApiProperty({
+        type: String,
+        description: "geoLocation",
+        default: ""
+
+    })
+    geoLocation: GeoLocation;
 }
 
 export class IngAtmsUpdateDTO {
@@ -22,7 +65,7 @@ export class IngAtmsUpdateDTO {
         type: String,
         description: "Id",
         default: "",
-        required:false
+        required: false
     })
     id: string;
     @ApiProperty({
@@ -31,4 +74,28 @@ export class IngAtmsUpdateDTO {
         default: ""
     })
     name: string;
+    @ApiProperty({
+        type: String,
+        description: "street",
+        default: ""
+
+    })
+    street: string;
+
+
+    @ApiProperty({
+        type: String,
+        description: "city",
+        default: ""
+
+    })
+    city: string;
+
+    @ApiProperty({
+        type: String,
+        description: "geoLocation",
+        default: ""
+
+    })
+    geoLocation: GeoLocation;
 }
