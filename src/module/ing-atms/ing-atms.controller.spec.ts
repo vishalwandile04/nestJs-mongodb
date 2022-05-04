@@ -7,7 +7,7 @@ import { Logger } from '@nestjs/common';
 
 describe('IngATMs Controller', () => {
   let ingATMsController: IngAtmsController;
-  let spyService: IngAtmsService;
+  let ingAtmsService: IngAtmsService;
   beforeAll(async () => {
     const ApiServiceProvider = {
       provide: IngAtmsService,
@@ -25,7 +25,7 @@ describe('IngATMs Controller', () => {
     }).compile();
 
     ingATMsController = app.get<IngAtmsController>(IngAtmsController);
-    spyService = app.get<IngAtmsService>(IngAtmsService);
+    ingAtmsService = app.get<IngAtmsService>(IngAtmsService);
   })
 
   it("calling create method", () => {
@@ -35,24 +35,24 @@ describe('IngATMs Controller', () => {
 
   it("calling findAll method", () => {
     ingATMsController.getAllIngAtms();
-    expect(spyService.getIngAtms).toHaveBeenCalled();
+    expect(ingAtmsService.getIngAtms).toHaveBeenCalled();
   })
 
   it("calling findOne method", () => {
     ingATMsController.getIngAtms("12345");
-    expect(spyService.getSingleIngAtms).toHaveBeenCalledWith("12345");
+    expect(ingAtmsService.getSingleIngAtms).toHaveBeenCalledWith("12345");
   })
 
   it("calling update method", () => {
     const dto = new IngAtmsCreateDTO();
     expect(ingATMsController.updateIngAtms("12345", dto)).not.toEqual(null);
-    expect(spyService.updateIngAtms).toHaveBeenCalled();
-    expect(spyService.updateIngAtms).toHaveBeenCalledWith("12345", dto);
+    expect(ingAtmsService.updateIngAtms).toHaveBeenCalled();
+    expect(ingAtmsService.updateIngAtms).toHaveBeenCalledWith("12345", dto);
   })
 
   it("calling delete method", () => {
     ingATMsController.removeIngAtms("12344");
-    expect(spyService.deleteIngATms).toHaveBeenCalledWith("12344");
+    expect(ingAtmsService.deleteIngATms).toHaveBeenCalledWith("12344");
   })
 
   it('should be defined', () => {

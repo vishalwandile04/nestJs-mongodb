@@ -5,7 +5,7 @@ import { AdminUserService } from './admin_user.service';
 
 describe('AdminUserController', () => {
   let controller: AdminUserController;
-  let spyService: AdminUserService;
+  let adminUserService: AdminUserService;
   const result = {
     username: "test@gmail.com",
     password: "test"
@@ -26,8 +26,8 @@ describe('AdminUserController', () => {
   });
 
   it('should return user', async () => {
-    const data = spyService.login(result.username, result.password);
-    expect(spyService.login).toHaveBeenCalledWith(result.username, result.password);
+    const data = adminUserService.login(result.username, result.password);
+    expect(adminUserService.login).toHaveBeenCalledWith(result.username, result.password);
 
   });
 });

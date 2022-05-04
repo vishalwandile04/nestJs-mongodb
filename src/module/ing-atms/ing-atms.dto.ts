@@ -20,13 +20,6 @@ export class GeoLocation {
 export class IngAtmsCreateDTO {
     @ApiProperty({
         type: String,
-        description: "Id",
-        default: "",
-        required: false
-    })
-    id: string;
-    @ApiProperty({
-        type: String,
         description: "Name",
         default: ""
     })
@@ -45,10 +38,8 @@ export class IngAtmsCreateDTO {
     city: string;
 
     @ApiProperty({
-        type: String,
-        description: "geoLocation",
-        default: ""
-
+        type: GeoLocation,
+        description: "geoLocation"
     })
     geoLocation: GeoLocation;
 }
@@ -56,13 +47,6 @@ export class IngAtmsCreateDTO {
 export class IngAtmsUpdateDTO {
     @ApiProperty({
         type: String,
-        description: "Id",
-        default: "",
-        required: false
-    })
-    id: string;
-    @ApiProperty({
-        type: String,
         description: "Name",
         default: ""
     })
@@ -80,9 +64,8 @@ export class IngAtmsUpdateDTO {
     })
     city: string;
     @ApiProperty({
-        type: Object,
-        description: "geoLocation",
-        default: ""
+        type: GeoLocation,
+        description: "geoLocation"
     })
     geoLocation: GeoLocation;
 }

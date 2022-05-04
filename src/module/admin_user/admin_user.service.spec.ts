@@ -6,7 +6,7 @@ export type MockType<T> = {
 };
 
 describe('AdminUserService', () => {
-  let spyService: AdminUserService;
+  let adminUserService: AdminUserService;
   let repositoryMock;
   const result = {
     username: "test@gmail.com",
@@ -23,16 +23,16 @@ describe('AdminUserService', () => {
       providers: [AdminUserService],
     }).compile();
 
-    spyService = module.get<AdminUserService>(AdminUserService);
+    adminUserService = module.get<AdminUserService>(AdminUserService);
     repositoryMock = module.get<AdminUserService>(AdminUserService);
   })
 
   it('should be defined', () => {
-    expect(spyService).toBeDefined();
+    expect(adminUserService).toBeDefined();
   });
 
   it('should return user by id', async () => {
-    const data = spyService.login(result.username, result.password);
+    const data = adminUserService.login(result.username, result.password);
     expect(repositoryMock.findOne).toHaveBeenCalled();
     expect(data).toBeDefined();
 

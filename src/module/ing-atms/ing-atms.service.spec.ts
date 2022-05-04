@@ -6,8 +6,8 @@ import { Logger } from '@nestjs/common';
 
 const result = {
     "id": "hgvhgvghvhujv",
-    "name": "test1",
-    "street": "street1",
+    "name": "test",
+    "street": "street",
     "city": "pune",
     "geoLocation": {
         "lat": "52.60022",
@@ -16,7 +16,7 @@ const result = {
 }
 
 describe('IngAtmsService', () => {
-    let spyService: IngAtmsService;
+    let ingAtmsService: IngAtmsService;
 
     beforeAll(async () => {
         const ApiServiceProvider = {
@@ -33,47 +33,47 @@ describe('IngAtmsService', () => {
             providers: [IngAtmsService, ApiServiceProvider, Logger],
         }).compile();
 
-        spyService = app.get<IngAtmsService>(IngAtmsService);
+        ingAtmsService = app.get<IngAtmsService>(IngAtmsService);
     })
 
     it('should be defined', () => {
-        expect(spyService).toBeDefined();
+        expect(ingAtmsService).toBeDefined();
     });
 
     it('should call create method with expected params', async () => {
-        const createSpy = jest.spyOn(spyService, 'addIngAtms');
+        const createSpy = jest.spyOn(ingAtmsService, 'addIngAtms');
         const dto = new IngAtmsCreateDTO();
-        //spyService.create(dto);
-        expect(spyService.addIngAtms(dto)).not.toEqual(null);
+        //ingAtmsService.create(dto);
+        expect(ingAtmsService.addIngAtms(dto)).not.toEqual(null);
         expect(createSpy).toHaveBeenCalledWith(dto);
     });
 
     it('should call getIngAtms method', async () => {
-        const findOneSpy = jest.spyOn(spyService, 'getIngAtms');
-        spyService.getIngAtms();
+        const findOneSpy = jest.spyOn(ingAtmsService, 'getIngAtms');
+        ingAtmsService.getIngAtms();
         expect(findOneSpy).toHaveBeenCalled();
     });
 
     it('should call updateIngAtms method', async () => {
-        const updateNoteSpy = jest.spyOn(spyService, 'updateIngAtms');
+        const updateNoteSpy = jest.spyOn(ingAtmsService, 'updateIngAtms');
         const id = 'testId';
         const dto = new IngAtmsUpdateDTO();
-        const resp = spyService.updateIngAtms(id, dto);
+        const resp = ingAtmsService.updateIngAtms(id, dto);
         expect(updateNoteSpy).toHaveBeenCalledWith(id, dto);
         expect(resp).toHaveBeenCalledWith(id, dto);
     });
 
     it('should call deleteIngATms method with expected param', async () => {
-        const deleteSpy = jest.spyOn(spyService, 'deleteIngATms');
+        const deleteSpy = jest.spyOn(ingAtmsService, 'deleteIngATms');
         const deleteId = 'deleteId';
-        spyService.deleteIngATms(deleteId);
+        ingAtmsService.deleteIngATms(deleteId);
         expect(deleteSpy).toHaveBeenCalledWith(deleteId);
     });
 
     it('should call getSingleIngAtms by id method', async () => {
-        const findOneSpy = jest.spyOn(spyService, 'getSingleIngAtms');
+        const findOneSpy = jest.spyOn(ingAtmsService, 'getSingleIngAtms');
         const id = 'testId';
-        spyService.getSingleIngAtms(id);
+        ingAtmsService.getSingleIngAtms(id);
         expect(findOneSpy).toHaveBeenCalledWith(id);
     });
 

@@ -14,6 +14,7 @@ describe('AuthService', () => {
     username: 'vishal.wandile@anka.co.in',
     password: 'Anka@1234',
   };
+  const user = { _id: '1', ...testUser };
 
   const JWTServiceProvider = {
     provide: JwtService,
@@ -33,6 +34,13 @@ describe('AuthService', () => {
       create: jest.fn(() => { return { dataValues: testUser } }),
     })
   }
+  const loggerServiceProvider = {
+    provide: Logger,
+    useFactory: () => ({
+      log: jest.fn(() => { }),
+      error: jest.fn(() => { }),
+    })
+  }
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -42,7 +50,8 @@ describe('AuthService', () => {
         AuthService,
         JWTServiceProvider,
         UsersServiceProvider,
-        Logger
+        Logger,
+        loggerServiceProvider
       ],
     }).compile();
 
@@ -55,18 +64,32 @@ describe('AuthService', () => {
   it('should be defined', () => {
     expect(authService).toBeDefined();
   });
-
   it('should validate user', async () => {
-    const data = authService.validateUserCredentials(testUser.username, testUser.password);
+    const data = await authService.validateUserCredentials(testUser.username, testUser.password);
     expect(userService.login).toHaveBeenCalled();
+    // jest.spyOn(userService, 'login').mockImplementation(() => Promise.resolve([user]))
+    expect(data).toBeDefined();
+
+    // jest.spyOn(userService, 'login').mockImplementation(() => [user]);
+    expect(authService.validateUserCredentials(testUser.username, testUser.password)).toBeDefined();
+
+    jest.spyOn(userService, 'login').mockImplementation(() => {
+      throw new Error();
+    });
+    expect(authService.validateUserCredentials(testUser.username, testUser.password)).rejects.toBeDefined();
+
   });
 
+
+
   it('should validate user test with invalid user', async () => {
-    const data = await authService.validateUserCredentials('bchdb', testUser.password);
+
+    const data = await authService.validateUserCredentials("hg vghvghvv", testUser.password);
     expect(data).toEqual(null);
   });
 
   it("should generate token(login)", async () => {
+    // jest.spyOn(userService, 'login').mockReturnValueOnce([user])
     const data = await authService.loginWithCredentials({ username: testUser.username, password: testUser.password });
     expect(authService.validateUserCredentials(testUser.username, testUser.password)).toBeDefined();
     expect(data).toBeDefined();

@@ -16,7 +16,6 @@ export const IngAtmssSchema = new mongoose.Schema({
 })
 
 export interface IngAtms {
-  id: string
   name: string,
   street: string,
   city: string,
