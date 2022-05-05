@@ -28,6 +28,11 @@ describe('AdminUserController', () => {
   it('should return user', async () => {
     const data = adminUserService.login(result.username, result.password);
     expect(adminUserService.login).toHaveBeenCalledWith(result.username, result.password);
-
+    expect(data).toBeDefined();
   });
+
+  it("should throw 401 Unauthorized error when user is not valid in login service", async () => {
+    jest.spyOn(adminUserService, 'login').mockImplementation(() => null);
+    expect(adminUserService.login).toHaveBeenCalledWith(result.username, result.password);
+  })
 });

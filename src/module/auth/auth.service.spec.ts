@@ -1,8 +1,8 @@
-import { Logger } from '@nestjs/common';
+import { InternalServerErrorException, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
+import { User } from '../admin_user/admin_user.model';
 import { AdminUserService } from '../admin_user/admin_user.service';
-
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
@@ -14,7 +14,6 @@ describe('AuthService', () => {
     username: 'vishal.wandile@anka.co.in',
     password: 'Anka@1234',
   };
-  const user = { _id: '1', ...testUser };
 
   const JWTServiceProvider = {
     provide: JwtService,
@@ -26,14 +25,10 @@ describe('AuthService', () => {
   const UsersServiceProvider = {
     provide: AdminUserService,
     useFactory: () => ({
-      login: jest.fn((username) => {
-        if (username === testUser.username)
-          return testUser;
-        else return null;
-      }),
-      create: jest.fn(() => { return { dataValues: testUser } }),
+      login: jest.fn(() => { }),
     })
   }
+
   const loggerServiceProvider = {
     provide: Logger,
     useFactory: () => ({
@@ -61,38 +56,48 @@ describe('AuthService', () => {
 
   });
 
+  const user = new User();
+
   it('should be defined', () => {
     expect(authService).toBeDefined();
   });
   it('should validate user', async () => {
+    jest.spyOn(userService, 'login').mockResolvedValue(user);
     const data = await authService.validateUserCredentials(testUser.username, testUser.password);
     expect(userService.login).toHaveBeenCalled();
-    // jest.spyOn(userService, 'login').mockImplementation(() => Promise.resolve([user]))
     expect(data).toBeDefined();
-
-    // jest.spyOn(userService, 'login').mockImplementation(() => [user]);
-    expect(authService.validateUserCredentials(testUser.username, testUser.password)).toBeDefined();
-
     jest.spyOn(userService, 'login').mockImplementation(() => {
       throw new Error();
     });
     expect(authService.validateUserCredentials(testUser.username, testUser.password)).rejects.toBeDefined();
-
   });
 
-
-
   it('should validate user test with invalid user', async () => {
-
+    jest.spyOn(userService, 'login').mockResolvedValue(user);
     const data = await authService.validateUserCredentials("hg vghvghvv", testUser.password);
     expect(data).toEqual(null);
   });
 
   it("should generate token(login)", async () => {
-    // jest.spyOn(userService, 'login').mockReturnValueOnce([user])
+    jest.spyOn(authService, 'validateUserCredentials').mockReturnValueOnce(Promise.resolve(user));
+    await userService.login(testUser.username, testUser.password);
     const data = await authService.loginWithCredentials({ username: testUser.username, password: testUser.password });
-    expect(authService.validateUserCredentials(testUser.username, testUser.password)).toBeDefined();
     expect(data).toBeDefined();
   })
+  // it("should throw 401 Unauthorized error when user is not valid in login service", async () => {
+  //   jest.spyOn(userService, 'login').mockImplementation(() => null);
+  //   jest.spyOn(authService, 'validateUserCredentials').mockReturnValueOnce(Promise.resolve(null));
+  //   expect(authService.loginWithCredentials({ username: testUser.username, password: testUser.password })).rejects.toThrow(UnauthorizedException);
+  // })
+
+  it("should throw 500 error when error occurred", async () => {
+    jest.spyOn(userService, 'login').mockImplementation(() => null);
+    jest.spyOn(authService, 'validateUserCredentials').mockImplementation(() => { throw new InternalServerErrorException() });
+    expect(authService.loginWithCredentials({ username: testUser.username, password: testUser.password })).rejects.toThrow(InternalServerErrorException);
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
 });

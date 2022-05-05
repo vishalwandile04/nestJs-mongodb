@@ -49,6 +49,7 @@ describe('Auth Controller', () => {
         userServiceProvider,
         authServiceProvider,
         loggerServiceProvider,
+        LocalStrategy,
         Logger
       ],
       controllers: [AuthController],
@@ -58,6 +59,7 @@ describe('Auth Controller', () => {
     authService = module.get<AuthService>(AuthService);
     userService = module.get<AdminUserService>(AdminUserService);
     loggerService = module.get<Logger>(Logger);
+    localStrategy = module.get<LocalStrategy>(LocalStrategy);
   });
 
   it("calling login method", () => {
@@ -67,15 +69,20 @@ describe('Auth Controller', () => {
     jest.spyOn(authService, 'loginWithCredentials').mockImplementation(() => {
       throw new Error();
     });
-    // expect(controller.login(loginReq)).rejects.toMatch('error');
+    expect(controller.login(loginReq)).rejects.toMatchObject({
+      message: "Please Enter Correct username and password."
+    });
   })
 
   // it("calling validate method", () => {
   //   let username = testUser.username;
   //   let password = testUser.password;
-
   //   expect(localStrategy.validate(username, password)).not.toEqual(null);
   //   expect(authService.validateUserCredentials).toHaveBeenCalledWith(username, password);
+  //   expect(localStrategy.validate(username, password)).rejects.toMatchObject({
+  //     message: "Error in Validating User.",
+  //     status: 500
+  //   });
   // })
 
   it('should be defined', () => {

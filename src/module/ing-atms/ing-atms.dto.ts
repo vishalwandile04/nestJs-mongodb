@@ -39,7 +39,8 @@ export class IngAtmsCreateDTO {
 
     @ApiProperty({
         type: GeoLocation,
-        description: "geoLocation"
+        description: "geoLocation",
+        required: false
     })
     geoLocation: GeoLocation;
 }

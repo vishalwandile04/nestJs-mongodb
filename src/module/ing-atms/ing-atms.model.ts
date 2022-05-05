@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import { Document, Model } from 'mongoose'
 
 export class GeoLocation {
   lat: string
@@ -21,3 +22,6 @@ export interface IngAtms {
   city: string,
   geoLocation: GeoLocation
 }
+
+
+export const Atms: Model<IngAtms> = mongoose.model('Ing_Atms', IngAtmssSchema)

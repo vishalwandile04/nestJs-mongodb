@@ -28,7 +28,7 @@ import { IngAtmsCreateDTO, IngAtmsUpdateDTO } from './ing-atms.dto';
 import { IngAtms } from './ing-atms.model';
 import { IngAtmsService } from './ing-atms.service';
 
-@ApiTags('ingAtms apis')
+@ApiTags('Ing Atms apis')
 @Controller('ingAtms')
 export class IngAtmsController {
   constructor(@Inject(Logger) private readonly logger: LoggerService,
@@ -44,16 +44,16 @@ export class IngAtmsController {
   @ApiForbiddenResponse({ description: 'Forbidden' })
   @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
   async addIngAtms(
-    @Body() ingATM: IngAtmsCreateDTO
+    @Body() ingATMs: IngAtmsCreateDTO
   ): Promise<IngAtms> {
     this.logger.log(`Inside createATM()`);
     try {
       // create a new ATM record
-      const result = await this.IngAtmsService.addIngAtms(ingATM);
+      const result = await this.IngAtmsService.addIngAtms(ingATMs);
       return result;
     } catch (error) {
       this.logger.error(error);
-      throw new InternalServerErrorException(error.message ? error.message : 'Internal server error')
+      throw new InternalServerErrorException('Internal server error')
     }
   }
 
@@ -73,7 +73,7 @@ export class IngAtmsController {
       return result;
     } catch (error) {
       this.logger.error(error);
-      throw new InternalServerErrorException(error.message ? error.message : 'Internal server error')
+      throw new InternalServerErrorException('Internal server error')
     }
   }
 
@@ -93,7 +93,7 @@ export class IngAtmsController {
       return result;
     } catch (error) {
       this.logger.error(error);
-      throw new InternalServerErrorException(error.message ? error.message : 'Internal server error')
+      throw new InternalServerErrorException('Internal server error')
     }
   }
 
@@ -117,7 +117,7 @@ export class IngAtmsController {
       return result;
     } catch (error) {
       this.logger.error(error);
-      throw new InternalServerErrorException(error.message ? error.message : 'Internal server error')
+      throw new InternalServerErrorException('Internal server error')
     }
   }
 
@@ -138,7 +138,7 @@ export class IngAtmsController {
       return result;
     } catch (error) {
       this.logger.error(error);
-      throw new InternalServerErrorException(error.message ? error.message : 'Internal server error')
+      throw new InternalServerErrorException('Internal server error')
     }
   }
 }
